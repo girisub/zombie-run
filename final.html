@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Zombie Run</title>
+  <script src="ocanvas.js"></script>
+  </head>
+  <body style="align:center;">
+  <div align="center"><canvas id="canvas" width="550" height="650"></canvas> </div>
+  <script>
+  var brainnos=0,p=0,carno1 = Math.floor(Math.random()*7),carno2 = Math.floor(Math.random()*7),carno3 = Math.floor(Math.random()*7);
+  var vehicle = new Array();
+  var brain=[];
+  var yellowBox1=[];
+  var yellowBox2=[];
+  var left=[];
+  var right=[];
+  var rect=[];
+  var treeright=[];
+  var treeleft=[];
+  var house=[];
+  var grease=[];
+  var car1=[];
+  var car2=[];
+  var car3=[];
+  var v;
+  var d1=0,d2=0,d3=0,i1,j1,k1,cardummy1,cardummy2,cardummy3;
+  var i=0;
+  var speed=7,speed1=true;
+  var m=0;
+  var u=0;
+  var t=0;
+  var z=0;
+  var r=0;
+  var d=0;
+  var e1,e2,e3;
+  var v1,v2,v3;
+  var cache1=[];
+  var cache2=[];
+  var cache3=[];
+  var timer;
+  var lifee=0,boostt=0,key2,key1,healthper=0;
+  var flag=false,flag1=true;
+  function zombiegr(a,b){
+	if(b<9)
+		setTimeout(function(){a.y+=(b-3)},10);
+	else
+		setTimeout(function(){a.y+=(b-6)},10);
+  }
+  
+  function checkHealth(a){
+	if (a<0.3){
+		return 1;
+	}
+	else if(a>584){
+		return 11;
+	}
+	else{
+		return false;
+	}
+  }
+  
+  
+  function assignright(){
+	y = -(Math.floor(Math.random()*800));
+	return y;
+  }
+  
+  function assignright1(a){
+	s = -(Math.floor(Math.random()*800));
+	
+	while(1){
+	if(Math.abs(s-a) > 90)
+	return s;
+	else 
+	s = -(Math.floor(Math.random()*800));
+  }
+  
+  }
+  
+  function yassigncar(q)
+   {
+	if(q==1){
+		d1++;
+		e1=0;
+	   y = (Math.floor(Math.random()*1200))+1000;
+	   if(d1==1){
+			cache1[d1]=y;
+			//console.log(d1+" "+y)
+			return y;
+		}
+		else{
+			while(d1!==1){
+			   for(v1=1;v1<d1;v1++){
+				   if(Math.abs(y-cache1[v1])>600 && y>1000)
+				   {	
+					   e1=1;
+				   }
+				   else {
+						e1=2;
+						break;
+				   }			
+			    }
+			   if(e1==1){
+					cache1[d1]=y;
+					break;
+			    }
+				else{
+					y = (Math.floor(Math.random()*6300));
+					e1=0;
+				}
+				//console.log(d);
+			}
+			//console.log(d1+" "+y)
+			return y;
+	   }
+	}
+	else if(q==2)
+	{
+	d2++;
+		e2=0;
+	   y = -(Math.floor(Math.random()*1200))-700;
+	   if(d2==1){
+			cache2[d2]=y;
+			//console.log(d2+" "+y)
+			return y;
+		}
+		else{
+			while(d2!==1){
+			   for(v2=1;v2<d2;v2++){
+				   if(Math.abs(y-cache2[v2])>600 && y<-100)
+				   {	
+					   e2=1;
+				   }
+				   else {
+						e2=2;
+						break;
+				   }			
+			    }
+			   if(e2==1){
+					cache2[d2]=y;
+					break;
+			    }
+				else{
+					y = -(Math.floor(Math.random()*6300))-700;
+					e2=0;
+				}
+				//console.log(d);
+			}
+			//console.log(d2+" "+y)
+			return y;
+	   }
+	}
+	else if(q==3)
+	{
+	d3++;
+		e3=0;
+	   y = (Math.floor(Math.random()*1200))+1000;
+	   if(d3==1){
+			cache3[d3]=y;
+			//console.log(d3+" "+y)
+			return y;
+		}
+		else{
+			while(d3!==1){
+			   for(v3=1;v3<d3;v3++){
+				   if(Math.abs(y-cache3[v3])>600 && y>1000)
+				   {	
+					   e3=1;
+				   }
+				   else {
+						e3=2;
+						break;
+				   }			
+			    }
+			   if(e3==1){
+					cache3[d3]=y;
+					break;
+			    }
+				else{
+					y = (Math.floor(Math.random()*6300));
+					e3=0;
+				}
+				//console.log(d);
+			}
+			//console.log(d3+" "+y)
+			return y;
+	   }
+	}
+	}
+   
+   function yassigntop(i,j){
+		if(j==1){
+		 y = Math.floor(Math.random()*6300);
+		
+			while(i>=0)
+			{
+				for(l1=1;l1<=6;l1++)
+				{
+					if(l1!=(i+1)){
+					if(Math.abs(y-cache1[l1])>600 && y>1000)
+						{
+							e1=1;
+						}
+					else{
+						e1=2;
+						break;
+						}
+					}
+				}
+				if(e1==1)
+					{	
+						cache1[i+1]=y;
+						break;
+					}
+				else{
+					y = (Math.floor(Math.random()*6300));
+					e1=0;
+				}
+			}
+			//console.log(j+" "+i+" "+y);
+			return y;		
+		}	
+		else if(j==2){
+		 y = -(Math.floor(Math.random()*6300));
+		
+			while(i>=0)
+			{
+				for(l2=1;l2<=6;l2++)
+				{
+					if(l2!=(i+1)){
+					if(Math.abs(y-cache2[l2])>600 && y<-200)
+						{
+							e2=1;
+						}
+					else{
+						e2=2;
+						break;
+						}
+					}
+				}
+				if(e2==1)
+					{	
+						cache2[i+1]=y;
+						break;
+					}
+				else{
+					y = -(Math.floor(Math.random()*6300));
+					e2=0;
+				}
+			}
+			//console.log(j+" "+i+" "+y);
+			return y;		
+		}
+		else if(j==3){
+		 y = Math.floor(Math.random()*6300);
+		
+			while(i>=0)
+			{
+				for(l3=1;l3<=6;l3++)
+				{
+					if(l3!=(i+1)){
+					if(Math.abs(y-cache3[l3])>600 && y>1000)
+						{
+							e3=1;
+						}
+					else{
+						e3=2;
+						break;
+						}
+					}
+				}
+				if(e3==1)
+					{	
+						cache3[i+1]=y;
+						break;
+					}
+				else{
+					y = (Math.floor(Math.random()*6300));
+					e3=0;
+				}
+			}
+			//console.log(j+" "+i+" "+y);
+			return y;		
+		}
+	}
+   
+  function checkoverlapy(a,c){
+	v=0;
+	y = -(Math.floor(Math.random()*600))-1500;
+		while(v==0){
+			for(i=0;i<8;i++){
+				if(Math.abs(a[i].y-y)>20 && Math.abs(y-c.y)>20)
+					v++;
+			}
+			if(v==8){
+			 return y;
+			}
+		y = -(Math.floor(Math.random()*600))-1500;
+		v=0;
+		}
+		
+  }
+   
+  function righty(a){
+  
+	y = -(Math.floor(Math.random()*900));
+	
+	while(1){
+		if(Math.abs(y-a)>80)
+			return y;
+		else
+			y = -(Math.floor(Math.random()*900));
+	}
+  }
+  
+  function checkEndtop(a){
+	
+	if(a.y < 0)
+		return true;
+		
+	else
+		return false;
+	
+  }
+  
+   function checkEndbot(a,b) {
+	var y = a.y;
+	
+	if(b==0){
+		if(y>=610)
+			return true;
+		else
+			return false;
+	}
+	else if(b==1){
+		if(y>=665){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else if(b==2){
+		if(y>1000){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+   }
+  
+  function hitTest(a,b) {
+	var x1=a.x;
+	var x2=b.x;
+	var y1=a.y;
+	var y2=b.y;
+    if((x1-x2)<0 && (x2-x1)<55 && (y1-y2)<10 && (y2-y1)<80){
+		return true;
+   }
+  
+   }
+   function hitTest1(a,b) {
+	var x1=a.x;
+	var x2=b.x;
+	var y1=a.y;
+	var y2=b.y;
+    if((x1-x2)<35 && (x2-x1)<65 && (y2-y1)>50 && (y2-y1)<80){
+		return true;
+   }
+   }
+  
+	function hitTest2(a,b,c){
+		var x1=a.x;
+		var x2=b.x;
+		var y1=a.y;
+		var y2=b.y;
+			if(c==1 || c==3){
+				if((x1-x2)<75 && (x2-x1)<25 && y1-y2<290 && y1-y2>90)
+					return true;
+				
+				else
+					return false;
+			}
+			else if(c==2){
+				if((x2-x1)<25 && (x1-x2)<75 && y2-y1<210 && y2-y1>90)
+					return true;
+				
+				else 
+					return false;
+			}
+	}
+  
+   
+   function random(){
+	a = Math.random()*400;
+	while (1){
+		if(a>130 && a<430)
+		return a;
+		else 
+		a = Math.random()*400;
+	}
+   }
+  </script>
+  <script>
+  
+  oCanvas.domReady(function () {
+	
+   var canvas = oCanvas.create({
+		canvas: "#canvas",
+		background: "#254117",
+		align: "center",
+		fps: 60
+		//#6CC46C
+		//#00B800
+   });
+   
+   var finish = canvas.display.rectangle({
+		x: 275,
+		y: 325,
+		width:550,
+		height:650,
+		fill: "#000000",
+		origin: { x: "center", y: "center" }
+   });
+	
+   for (i=0;i<2;i++){
+	rect[i] = canvas.display.rectangle({
+		x: 250,
+		y: Math.pow(-1,i)*600,
+		width:380,
+		height:1250,
+		fill: "#2E2E2E",
+		align: "center",
+		origin: { x: "center", y: "top" }
+   });
+   canvas.addChild(rect[i]);
+   }
+   
+   var rectside = canvas.display.rectangle({
+		x: 525,
+		y: 300,
+		origin: {x: "center", y:"center"},
+		width : 60,
+		height: 699,
+		fill: "#000000"
+   });
+   
+   var health = canvas.display.text({
+		x: 40,
+		y: 625,
+		origin: { x: "center", y: "center" },
+		width: 20,
+		height: 20,
+		font: "bold 20px sans-serif",
+		text: "Health:",
+		fill: "ffffff"
+   });
+   var one = canvas.display.text({
+		x: 260,
+		y: 240,
+		origin: { x: "center", y: "center" },
+		width:70,
+		height: 70,
+		font: "bold 50px sans-serif",
+		text: "1",
+		fill: "ffffff"
+   });
+    var two = canvas.display.text({
+		x: 260,
+		y: 240,
+		origin: { x: "center", y: "center" },
+		width: 70,
+		height: 70,
+		font: "bold 50px sans-serif",
+		text: "2",
+		fill: "ffffff"
+   });
+    var three = canvas.display.text({
+		x: 260,
+		y: 240,
+		origin: { x: "center", y: "center" },
+		width: 70,
+		height: 70,
+		font: "bold 50px sans-serif",
+		text: "3",
+		fill: "ffffff"
+   });
+   var go = canvas.display.text({
+		x: 260,
+		y: 240,
+		origin: { x: "center", y: "center" },
+		width: 70,
+		height: 70,
+		font: "bold 50px sans-serif",
+		text: "GO",
+		fill: "ffffff"
+   });
+   
+   	var oops = canvas.display.text({
+		x: 260,
+		y: 330,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		font: "bold 30px sans-serif",
+		text: "OOPS...",
+		fill: "ffffff"
+	});
+	
+	 var thanks = canvas.display.text({
+		x: 260,
+		y: 370,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		font: "bold 30px sans-serif",
+		text: "TOO BAD U CANT BE HUMAN ;)",
+		fill: "ffffff"
+	});
+	
+	var score = canvas.display.text({
+		x: 260,
+		y: 420,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		font: "bold 30px sans-serif",
+		text: "",
+		fill: "ffffff"
+	});
+	
+   var playagain = canvas.display.text({
+		x: 260,
+		y: 470,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		font: "bold 30px sans-serif",
+		text: "WANNA PLAY AGAIN ?",
+		fill: "ffffff"
+	});
+	
+	var clickhere = canvas.display.text({
+		x: 260,
+		y: 510,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		font: "bold 30px sans-serif",
+		text: "CLICK HERE",
+		fill: "ffffff"
+	});
+	
+	var festember = canvas.display.image({
+		x: 265,
+		y: 150,
+		height: 300,
+		width: 300,
+		origin: { x: "center", y: "center" },
+		image: "img/festember.jpg"
+	});
+	
+	var zombierush = canvas.display.text({
+		x: 260,
+		y: 180,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		font: "bold 50px sans-serif",
+		text: "ZOMBIE RUSH",
+		fill: "#2A120A"
+	});
+   var text1 = canvas.display.text({
+		x: 260,
+		y: 240,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		font: "bold 50px sans-serif",
+		text: "START",
+		fill: "ffffff"
+	});
+	
+	var rectinst = canvas.display.rectangle({
+		x: 0,
+		y: 400,
+		origin: {x: "left", y:"center"},
+		width : 495,
+		height: 500,
+		fill: "#806517"
+   });
+   
+	var text2 = canvas.display.text({
+		x: 250,
+		y: 280,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		text: "USE LEFT AND RIGHT ARROWS TO MOVE",
+		fill: "ffffff"
+	});
+	
+	var text3 = canvas.display.text({
+		x: 250,
+		y: text2.y+30,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		text: "COLLECT THE BRAINS:         TO INCRESE HEALTH",
+		fill: "ffffff"
+	});
+	var text4 = canvas.display.text({
+		x: 250,
+		y: text3.y+30,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		text: "AND TO BECOME MORE HUMAN..!!!",
+		fill: "ffffff"
+	});
+	
+	var text5 = canvas.display.text({
+		x: 250,
+		y: text4.y+30,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		text: "COLLECT THE BOOST:        AND LIFE:      ",
+		fill: "ffffff"
+	});
+	var text6 = canvas.display.text({
+		x: 250,
+		y: text5.y+30,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		text: "RUNNING OVER GREASE POOL WILL SLOW YOU DOWN",
+		fill: "ffffff"
+	});
+	
+	var text7 = canvas.display.text({
+		x: 250,
+		y: text6.y+30,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		text: "USE X KEY TO BOOST",
+		fill: "ffffff"
+	});
+	
+	var text8 = canvas.display.text({
+		x: 250,
+		y: text7.y+30,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		text: "YOU LOSE IF YOU GET HIT BY A CAR OR",
+		fill: "ffffff"
+	});
+	
+	var text9 = canvas.display.text({
+		x: 250,
+		y: text8.y+30,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		text: "GO BELOW THE SCREEN",
+		fill: "ffffff"
+	});
+	
+	var text10 = canvas.display.text({
+		x: 250,
+		y: text9.y+30,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		text: "THE SPEED OF THE GAME KEEPS INCREASING",
+		fill: "ffffff"
+	});
+	
+	var text11 = canvas.display.text({
+		x: 250,
+		y: text10.y+30,
+		origin: { x: "center", y: "center" },
+		width: 75,
+		height: 30,
+		text: "AND SO DOES THE SPEED OF THE CARS...!! SO WATCH OUT...!!!",
+		fill: "ffffff"
+	});
+   
+   var brainno = canvas.display.text({
+		x: 55,
+		y: 40,
+		origin: { x: "center", y: "center" },
+		width: 20,
+		height: 20,
+		font: "bold 20px sans-serif",
+		text: "BRAINS:0",
+		fill: "ffffff"
+   });
+   
+    var LIFE = canvas.display.text({
+		x: 442,
+		y: 60,
+		origin: { x: "center", y: "center" },
+		width: 20,
+		height: 20,
+		font: "bold 20px sans-serif",
+		text: "LIFE:0",
+		fill: "ffffff"
+   });
+   
+    var BOOST = canvas.display.text({
+		x: 442,
+		y: 90,
+		origin: { x: "center", y: "center" },
+		width: 20,
+		height: 20,
+		font: "bold 20px sans-serif",
+		text: "BOOST:0",
+		fill: "ffffff"
+   });
+   
+    var healthbar = canvas.display.rectangle({
+		x: 504,
+		y: 616,
+		width: 37,
+		height: 10,
+		fill: "#ff9900",
+		origin: { x: "bottom", y: "bottom" }
+   });
+   
+   var healthlimit1 = canvas.display.rectangle({
+		x: 501,
+		y: 625,
+		width: 43,
+		height: 5,
+		fill: "#ff9900",
+		origin: { x: "bottom", y: "bottom" }
+   });
+   
+   var healthlimit2 = canvas.display.rectangle({
+		x: 501,
+		y: 28,
+		width: 43,
+		height: 5,
+		fill: "#ff9900",
+		origin: { x: "bottom", y: "bottom" }
+   });
+   
+   
+    var hundred = canvas.display.text({
+		x: 522,
+		y: 13,
+		origin: { x: "center", y: "center" },
+		width: 20,
+		height: 20,
+		//font: "bold 20px sans-serif",
+		text: "100%",
+		fill: "ffffff"
+   });
+   
+   
+    var zero = canvas.display.text({
+		x: 525,
+		y: 639,
+		origin: { x: "center", y: "center" },
+		width: 20,
+		height: 20,
+		//font: "bold 20px sans-serif",
+		text: "0%",
+		fill: "ffffff"
+   });
+ 
+   var human = canvas.display.text({
+		x: 340,
+		y: 21,
+		origin: { x: "left", y: "center" },
+		width: 75,
+		height: 30,
+		font: "bold 20px sans-serif",
+		text: "HUMAN : ",
+		fill: "ffffff"
+	});
+	
+	var percentage = canvas.display.text({
+		x: 430,
+		y: 21,
+		origin: { x: "left", y: "center" },
+		width: 75,
+		height: 30,
+		font: "bold 20px sans-serif",
+		text: "0%",
+		fill: "ffffff"
+	});
+   
+   for(j=0;j<8;j++)
+   {
+    yellowBox1[j] = canvas.display.rectangle({
+		x: 200,
+		y: m,
+		width: 12,
+		height: 48,
+		speed: 0,
+		fill: "#ff9900",
+		origin: { x: "center", y: "bottom" }
+   });
+   canvas.addChild(yellowBox1[j]);
+   m=m+46+38;
+   //ff9900
+   }
+   
+   for(t=0;t<8;t++)
+   {
+    yellowBox2[t] = canvas.display.rectangle({
+		x: 320,
+		y: u,
+		width: 12,
+		height: 48,
+		speed: 0,
+		fill: "#ff9900",
+		origin: { x: "center", y: "bottom" }
+   });
+   canvas.addChild(yellowBox2[t]);
+   u=u+46+38;
+   //ff9900
+   }
+   
+   for(o1=0;o1<2;o1++){
+   grease[o1] = canvas.display.image({
+		x: 200+(o1*120),
+		y: -(Math.floor(Math.random()*900))-400-o1*300,
+		height: 40,
+		width: 60,
+		origin: { x: "center", y: "bottom" },
+		image: "img/gr.png"
+	});
+	
+   canvas.addChild(grease[o1]);
+   }
+   
+   for(i=0;i<8;i++)
+   {
+    brain[i]= canvas.display.image({
+		x: random(),
+		y: -(Math.floor(Math.random()*400)),
+		height: 15,
+		width: 20,
+		origin: { x: "center", y: "center" },
+		image: "img/brain.png"
+   });
+   canvas.addChild(brain[i]);
+   }
+   
+    for(u=0;u<16;u++){
+		treeright[u] = canvas.display.image({
+			x: 455,
+			y: t,
+			height: 50,
+			width: 50,
+			origin: { x: "center", y: "top" },
+			image: "img/tree.png"
+		});
+	canvas.addChild(treeright[u]);
+	
+	treeleft[u] = canvas.display.image({
+			x: 45,
+			y: t,
+			height: 50,
+			width: 50,
+			origin: { x: "center", y: "top" },
+			image: "img/tree.png"
+		});
+		t=t+50;
+	canvas.addChild(treeleft[u]);
+   }
+   
+   var instructions = canvas.display.rectangle({
+		x: 255,
+		y: 400,
+		width: 280,
+		height: 220,
+		speed: 0,
+		fill: "#ff9900",
+		origin: { x: "center", y: "center" }
+   });
+  
+	
+	var bost = canvas.display.image({
+		
+		x: 288,
+		y: 368,
+		height: 20,
+		width: 20,
+		origin: { x: "center", y: "center" },
+		image: "img/speed.png"
+		
+	});
+	
+	var brn = canvas.display.image({
+		
+		x: 257,
+		y: 309,
+		height: 20,
+		width: 30,
+		origin: { x: "center", y: "center" },
+		image: "img/brain.png"
+		
+	});
+	
+	var lfe = canvas.display.image({
+		
+		x: 393,
+		y: 368,
+		height: 20,
+		width: 20,
+		origin: { x: "center", y: "center" },
+		image: "img/heart.png"
+		
+	});
+	
+	var brns = canvas.display.image({
+		
+		x: 393,
+		y: 338,
+		height: 20,
+		width: 20,
+		origin: { x: "center", y: "center" },
+		image: "img/heart.png"
+		
+	});
+		
+	
+	var life = canvas.display.image({
+		
+		x: random(),
+		y: -(Math.floor(Math.random()*800))-400,
+		height: 20,
+		width: 20,
+		origin: { x: "center", y: "center" },
+		image: "img/heart.png"
+		
+	});
+	canvas.addChild(life);
+
+	var boost = canvas.display.image({
+		
+		x: random(),
+		y: -(Math.floor(Math.random()*800))-400,
+		height: 20,
+		width: 20,
+		origin: { x: "center", y: "center" },
+		image: "img/speed.png"
+		
+	});
+	canvas.addChild(boost);
+	
+	for(i=0;i<7;i++){
+	car1[i] = canvas.display.image({
+		x: 130,
+		y: Math.floor(Math.random()*300)+950,
+		height: 310,
+		width: 130,
+		origin: { x: "center", y: "bottom" },
+		image: "img/car"+i+".png"
+	});
+	canvas.addChild(car1[i]);
+	}
+	
+	for(i=0;i<7;i++){
+	car2[i] = canvas.display.image({
+		x: 260,
+		y: -Math.floor(Math.random()*300)-350,
+		height: 310,
+		width: 130,
+		lane: 1,
+		origin: { x: "center", y: "top" },
+		image: "img/carr"+i+".png"
+	});
+	canvas.addChild(car2[i]);
+	}
+	
+	for(i=0;i<7;i++){
+	car3[i] = canvas.display.image({
+		x: 380,
+		y: Math.floor(Math.random()*300)+950,
+		height: 310,
+		width: 130,
+		lane: 1,
+		origin: { x: "center", y: "bottom" },
+		image: "img/carrr"+i+".png"
+	});
+	canvas.addChild(car3[i]);
+	}
+	
+	var zombie = canvas.display.sprite({
+	x:261,
+	y:400,
+	origin: { x: "center", y: "center" },
+	image: "img/zombietop.png",   		
+    direction: "x",
+        frames:[
+             {x:676, y:394,w:50,h:78,d:100},
+             {x:808, y:393,w:48,h:91,d:100},
+             {x:935, y:395,w:49,h:90,d:100},
+             {x:1062, y:396,w:48,h:80,d:100},
+             {x:1191, y:396,w:45,h:82,d:100},
+             {x:1320, y:395,w:45,h:84,d:100},
+             {x:1446, y:399,w:46,h:86,d:100},
+             {x:550, y:396,w:48,h:84,d:100}
+        ],
+    loop:true,
+    action:true
+});
+
+
+   canvas.addChild(brainno);
+   canvas.addChild(BOOST);
+   canvas.addChild(LIFE);
+   canvas.addChild(zombie);
+   canvas.addChild(rectside);
+   canvas.addChild(healthlimit1);
+   canvas.addChild(healthlimit2);
+   canvas.addChild(healthbar);
+   canvas.addChild(hundred);
+   canvas.addChild(zero);
+   canvas.addChild(human);
+   canvas.addChild(percentage);
+   canvas.addChild(rectinst);
+   canvas.addChild(text1);
+   canvas.addChild(text2);
+   canvas.addChild(text3);
+   canvas.addChild(text4);
+   canvas.addChild(text5);
+   canvas.addChild(text6);
+   canvas.addChild(text7);
+   canvas.addChild(text8);
+   canvas.addChild(text9);
+   canvas.addChild(text10);
+   canvas.addChild(text11);
+   canvas.addChild(zombierush);
+   canvas.addChild(bost);
+   canvas.addChild(lfe);
+   canvas.addChild(brn);
+   
+   
+   text1.bind("click tap", function(){
+   canvas.removeChild(text1);
+   canvas.removeChild(text2);
+   canvas.removeChild(text3);
+   canvas.removeChild(text4);
+   canvas.removeChild(text5);
+   canvas.removeChild(text6);
+   canvas.removeChild(text7);
+   canvas.removeChild(text8);
+   canvas.removeChild(text9);
+   canvas.removeChild(text10);
+   canvas.removeChild(text11);
+   canvas.removeChild(zombierush);
+   canvas.removeChild(rectinst);
+   canvas.removeChild(bost);
+	canvas.removeChild(lfe);
+   canvas.removeChild(brn);
+   if(flag == false){
+   flag = true;
+   zombie.startAnimation();
+   canvas.bind("keypress",function(e) {
+	
+		key2 = e.keyCode;
+		if(key2 == 37 && speed1==true){
+			//console.log(1);
+			zombie.x-=3;
+			if(zombie.x==60)
+			{	
+				//console.log("asdlasdg");
+				zombie.x+=6;
+			}
+		}
+		else if(key2 == 39 && speed1==true){
+			//console.log(1);
+			zombie.x+=3;
+			
+			if(zombie.x==393)
+			{
+				console.log(zombie.x);
+				zombie.x-=6;
+			}
+		}	
+   });
+   
+   canvas.bind("keyup",function(w){
+	key1 = w.keyCode;
+		if(key1 == 88 && boostt>0 && speed1==true){
+			boostt--;
+			BOOST.text = "BOOST:"+boostt;
+			for(i=0;i<40;i++){
+				setTimeout(function(){zombie.y-=1},i+50);
+				healthbar.height-=0.6;
+			}
+			}
+   
+   });
+   timer=setInterval(function(){healthbar.height-=1},1400-speed*60);
+   if(flag1==true){
+	canvas.setLoop(function () { 
+		for(i=0;i<8;i++)
+		{
+			if(speed1==true){
+			brain[i].y+= speed;
+			}
+			if(hitTest(zombie,brain[i])){
+				brainnos++;
+				healthper += 0.2;
+				healthbar.height += 2;
+				percentage.text = healthper.toFixed(1)+"%";
+				brain[i].x = random();
+				brain[i].y = -(Math.random()*700);
+				brainno.text="BRAINS:"+brainnos;
+				canvas.redraw();
+			}
+			if(checkEndbot(brain[i],1)){
+				brain[i].x = random();
+				brain[i].y = -(Math.random()*700);
+			}
+		}
+		
+		
+		if(hitTest(zombie,life) && lifee<2){
+			lifee++;
+			LIFE.text = "LIFE:"+lifee;
+			if(lifee<2){
+				life.y = -(Math.random()*700)-7000;//checkoverlapy(brain,boost);
+				life.x = random();
+			}
+			else if(lifee==2){
+				life.x = 800;
+			}
+		}
+		if(hitTest(zombie,boost) && boostt<2){
+			boostt++;
+			BOOST.text = "BOOST:"+boostt;
+			if(boostt<2){
+				boost.y = -(Math.random()*700)-4000;//checkoverlapy(brain,life);
+				boost.x = random();
+			}
+			else if(boostt==2){
+				boost.x = 900;
+			}
+		}
+		if(speed1==true){
+		car1[carno1].y -= speed-0.5;
+		car2[carno2].y += speed+5;
+		car3[carno3].y -= speed-0.5;
+		life.y += speed;
+		boost.y += speed;
+		}
+		
+		if((hitTest2(car1[carno1],zombie,1) || hitTest2(car2[carno2],zombie,2) || hitTest2(car3[carno3],zombie,3)) && lifee>0)
+			{	
+				zombie.x = 170;
+				lifee--;
+				if(lifee<0){
+					lifee++;
+				}
+				LIFE.text = "LIFE:"+lifee;
+				speed1=false;
+				zombie.stopAnimation();
+				//canvas.timeline.stop();
+				//setTimeout(function(){zombie.stopAnimation();},400);
+				setTimeout(function(){canvas.addChild(one);},500);
+				setTimeout(function(){canvas.removeChild(one);},1500);
+				setTimeout(function(){canvas.addChild(two);},1550);
+				setTimeout(function(){canvas.removeChild(two);},2550);
+				setTimeout(function(){canvas.addChild(three);},2600);
+				setTimeout(function(){canvas.removeChild(three);},3600);
+				setTimeout(function(){canvas.addChild(go);},3650);
+				setTimeout(function(){canvas.removeChild(go);},4650);
+				setTimeout(function(){zombie.startAnimation();},4650);
+				setTimeout(function(){speed1=true},4670);
+				//setTimeout(function(){zombie.startAnimation();},4671);
+			}
+		else if((hitTest2(car1[carno1],zombie,1) || hitTest2(car2[carno2],zombie,2) || hitTest2(car3[carno3],zombie,3)))
+			{	
+				canvas.addChild(finish);
+				canvas.addChild(festember);
+				canvas.addChild(playagain);
+				canvas.addChild(score);
+				score.text = "YOUR SCORE IS : "+brainnos;
+				canvas.addChild(thanks);
+				canvas.addChild(oops);
+				canvas.addChild(clickhere);
+				clickhere.bind("click tap", function(){location.reload()});
+				console.log("finish");
+				canvas.timeline.stop();
+				speed1=false;
+			}
+		
+		if(checkEndtop(car1[carno1])){
+			car1[carno1].y = 1000;
+			cardummy1 = Math.floor(Math.random()*7);
+			carno1 = cardummy1;
+			car1[carno1].y = Math.floor(Math.random()*300)+860;
+			console.log("1 :"+car1[carno1].image);
+		}
+		
+		if(checkEndbot(car2[carno2],1)){
+			car2[carno2].y = -1000;
+			cardummy2 = Math.floor(Math.random()*7);
+			carno2 = cardummy2;
+			car2[carno2].image = "img/carr"+carno2+".png";
+			car2[carno2].y = -Math.floor(Math.random()*400)-500;
+			console.log("2 :"+car2[carno2].image);
+		}
+		
+		if(checkEndtop(car3[carno3])){
+			car3[carno3].y = 1000;
+			cardummy3 = Math.floor(Math.random()*7);
+			carno3 = cardummy3;
+			car3[carno3].image = "img/carrr"+carno3+".png";
+			car3[carno3].y = Math.floor(Math.random()*300)+860;
+			console.log("3 :"+car3[carno3].image);
+		}
+		
+		for(i=0;i<16;i++){
+			if(speed1==true){
+			treeright[i].y += speed;
+			}
+			if(checkEndbot(treeright[i],1)){
+			treeright[i].y = -40;
+			}
+		}
+		
+		for(i=0;i<16;i++){
+			if(speed1==true){
+			treeleft[i].y += speed;
+			}
+			if(checkEndbot(treeleft[i],1)){
+			treeleft[i].y = -40;
+			}
+		}
+		if(checkEndbot(life,2) && life.x<650){
+			/*p++;
+			console.log("life end"+p);*/
+			life.y = checkoverlapy(brain,boost);
+			life.x = random();
+			
+		}
+			
+		if(checkEndbot(boost,2) && boost.x<650 ){
+		
+			boost.y = checkoverlapy(brain,life);
+			boost.x = random();
+			
+		}
+		if(checkEndbot(boost,2) && boost.x==900 && boostt!=2 ){
+		
+			boost.y = checkoverlapy(brain,life)-500;
+			boost.x = random();
+			
+		}
+		
+		if(checkHealth(healthbar.height)== 11){
+			healthbar.height=585;
+		}
+		
+		for(j=0;j<8;j++)
+		{
+			if(speed1==true){
+			yellowBox1[j].y += speed;
+			}
+			if(checkEndbot(yellowBox1[j],1)){
+				yellowBox1[j].y=0;
+				//canvas.redraw();
+			}
+		}
+		
+		for(j=0;j<8;j++)
+		{
+			if(speed1==true){
+			yellowBox2[j].y += speed;
+			}
+			if(checkEndbot(yellowBox2[j],1)){
+				yellowBox2[j].y=0;
+				//canvas.redraw();
+			}
+		}
+		
+		for(q=0;q<2;q++){
+			if(speed1==true){
+			rect[q].y += speed;
+			}
+			if(rect[q].y = 1800)
+			{
+				//alert("HI");
+				rect[q].y = -600;
+			}
+		}
+		
+		for(i=0;i<2;i++){
+		if(speed1==true){
+		grease[i].y+=speed;
+		}
+		if(hitTest1(zombie,grease[i])){
+			zombiegr(zombie,speed);
+		}
+		if(checkEndbot(grease[i],1) && speed<=9){
+			if(i==1){
+			grease[i].x = 200;
+			grease[i].y=-(Math.random()*500)-1600;
+			}
+			else{
+			grease[i].x = 320;
+			grease[i].y=-(Math.random()*500)-1300;
+			}
+		}
+		else if(checkEndbot(grease[i],1) && speed>9){
+			if(i==1){
+			grease[i].x = 200;
+			grease[i].y=-(Math.random()*600)-1900;
+			console.log("1"+grease[i].y);
+			}
+			else{
+			grease[i].x = 320;
+			grease[i].y=-(Math.random()*600)-1700;
+			console.log("2"+grease[i].y);
+			}
+		}
+		}
+		
+		if(checkEndbot(zombie,0)){
+			alert("you lost");
+			//init();
+			return;
+		}
+		
+		if(brainnos>30 && brainnos<50)
+		{
+			speed=9;
+		}
+		else if(brainnos>50 && brainnos<80)
+		{
+			speed=11;
+		}
+		else if(brainnos>80 && brainnos<100)
+		{
+			speed=11.5;
+		}
+		else if(brainnos>100 && brainnos<125)
+		{
+			speed=12.5;
+		}
+		else if(brainnos>125 && brainnos<160)
+		{
+			speed=13.5;
+		}
+		else if(brainnos>160 && brainnos<200)
+		{
+			speed=14;
+		}
+		else if(brainnos>200 && brainnos<250)
+		{
+			speed=15;
+		}
+		else if(brainnos>250 && brainnos<300)
+		{
+			speed=16;
+		}
+		else if(brainnos>300 && brainnos<320)
+		{
+			speed=17;
+		}
+		else if(brainnos>320)
+		{
+			speed=18;
+		}
+   });
+   canvas.timeline.start();
+   }
+   }
+   });
+  });
+  clearInterval(timer);
+  </script>
+  </body>
+</html>
+</html>
